@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-demo
+  namespace: qatest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins-demo 
+  template:
+    metadata:
+      labels:
+        app: jenkins-demo
+    spec:
+      containers:
+      - image: 192.168.40.62/go/app:${build_tag}
+        imagePullPolicy: IfNotPresent
+        name: jenkins-demo
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: demo
+   namespace: qatest
+spec:
+   selector:
+     app: jenkins-demo
+   type: NodePort
+   ports:
+   - port: 18888
+     targetPort: 18888
+     nodePort: 31891
