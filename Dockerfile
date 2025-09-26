@@ -1,6 +1,6 @@
 FROM golang:1.10.4-alpine
 
-ADD . /go/src/app
+COPY . /go/src/app
 
 WORKDIR /go/src/app
 
